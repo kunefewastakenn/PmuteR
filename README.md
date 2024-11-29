@@ -13,7 +13,6 @@ Basic python executable for muting selected program and programs even while unfo
 [your function key] [+] [desired alphabetical key]
 
 - With this way you can mute and unmute with that keybind
-
 ```
 ## Isssues
 
