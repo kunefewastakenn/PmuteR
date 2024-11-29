@@ -1,2 +1,2 @@
-# PmuteR
-Basic python app for muting selected program and programs.
+# PymuteR
+Basic python app for muting selected program and programs even while unfocused
