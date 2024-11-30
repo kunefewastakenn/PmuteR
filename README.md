@@ -1,4 +1,4 @@
-# PymuteR
+# PmuteR
 Basic python executable for muting selected program and programs even while unfocused.
 
 
@@ -13,9 +13,8 @@ Basic python executable for muting selected program and programs even while unfo
 [your function key] [+] [desired alphabetical key]
 
 - With this way you can mute and unmute with that keybind
-
 ```
-## Isssues
+## Issues
 
 This project fully depends on error and issiue reports. Issue reporting highly appreciated
 
