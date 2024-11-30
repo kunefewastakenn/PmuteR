@@ -29,7 +29,7 @@ def add_keybinding():
         return
 
     if key in keybindings:
-        messagebox.showwarning("Keybind confliction", f"keybind '{key}' is already assigned to another application")
+        messagebox.showwarning("Keybind confliction", f"keybind '{key}' is already assigned to another application please change it")
         return
 
     keybindings[key] = app_name
@@ -45,7 +45,7 @@ def print_audio_sessions():
     for session in sessions:
         if session.Process:
             volume = session._ctl.QueryInterface(ISimpleAudioVolume)
-            mute_status = "Muted" if volume.GetMute() else "Unmuted"
+            mute_status = "muted succsesfully" if volume.GetMute() else "unmuted succsesfully"
             print(f" - {session.Process.name()} ({mute_status})")
         else:
             print(" - System sounds")
@@ -97,11 +97,11 @@ ttk.Label(frame, text="Assigned Keybinds:").grid(row=3, column=0, sticky=tk.W, p
 keybinding_list = tk.Listbox(frame, height=10, width=60)
 keybinding_list.grid(row=4, column=0, columnspan=3, pady=(0, 10))
 
-footer_label = tk.Label(root, text="made by @kunefewastakenn", font=("Arial", 8), anchor="se")
+footer_label = tk.Label(root, text="made by @kunefewastakenn", font=("Arial", 9), anchor="se")
 footer_label.place(relx=1.0, rely=1.0, anchor="se", x=-10, y=-10)
 
-footer_label = tk.Label(root, text="write your keybind with using ""+"" example (ctrl+k)", font=("Arial", 8), anchor="se")
-footer_label.place(relx=1.0, rely=1.0, anchor="se", x=-250, y=-10)
+footer_label = tk.Label(root, text="write your keybind with using ""+"" example (ctrl+k)", font=("Arial", 9), anchor="se")
+footer_label.place(relx=1.0, rely=1.0, anchor="se", x=-235, y=-10)
 
 
 refresh_programs()
