@@ -29,7 +29,7 @@ def add_keybinding():
         return
 
     if key in keybindings:
-        messagebox.showwarning("Keybind confliction", f"keybind '{key}' is already assigned to another application please change it")
+        messagebox.showwarning("Keybind confliction", f"keybind '{key}' is already assigned to another application plis change it")
         return
 
     keybindings[key] = app_name
