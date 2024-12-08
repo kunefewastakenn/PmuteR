@@ -1,6 +1,7 @@
 import tkinter as tk
 from tkinter import ttk, messagebox
 from pycaw.pycaw import AudioUtilities, ISimpleAudioVolume
+from collections import defaultdict
 from plyer import notification
 import keyboard
 
@@ -39,16 +40,24 @@ def add_keybinding():
     keybind_var.set("")
 
 
+from collections import defaultdict
+
 def print_audio_sessions():
     sessions = AudioUtilities.GetAllSessions()
-    print("Active audio sessions:")
+    seen_apps = set()
+
+    print("Active audio sessions (unique):")
     for session in sessions:
-        if session.Process:
+        if session.Process and session.Process.name() not in seen_apps:
             volume = session._ctl.QueryInterface(ISimpleAudioVolume)
-            mute_status = "muted succsesfully" if volume.GetMute() else "unmuted succsesfully"
+            mute_status = "muted" if volume.GetMute() else "unmuted"
             print(f" - {session.Process.name()} ({mute_status})")
-        else:
-            print(" - System sounds")
+            seen_apps.add(session.Process.name())
+        elif not session.Process and "System sounds" not in seen_apps:
+            print(" - System sounds (unmuted)")
+            seen_apps.add("System sounds")
+
+
 
 
 def refresh_programs():
@@ -62,7 +71,9 @@ def remove_keybinding():
     if key in keybindings:
         del keybindings[key]
         keyboard.remove_hotkey(key)
-        keybinding_list.delete(keybinding_list.curselection())
+        keybinding_list.delete(0, tk.END)
+        for key, app in keybindings.items():
+            keybinding_list.insert(tk.END, f"{key} -> {app}")
         keybind_var.set("")
 
 
@@ -90,6 +101,10 @@ program_dropdown.grid(row=0, column=1, sticky=tk.W)
 # refresh button
 refresh_button = ttk.Button(frame, text="Refresh", command=refresh_programs)
 refresh_button.grid(row=0, column=2, sticky=tk.E)
+
+#printing audio sessions
+refresh_button = ttk.Button(frame, text="Print audio sessions", command=print_audio_sessions)
+refresh_button.grid(row=10, column=2, sticky=tk.E)
 
 #remov keyindd
 refresh_button = ttk.Button(frame, text="Remove Keybind", command=remove_keybinding)
