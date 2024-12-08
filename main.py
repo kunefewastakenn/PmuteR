@@ -1,8 +1,8 @@
 import tkinter as tk
 from tkinter import ttk, messagebox
 from pycaw.pycaw import AudioUtilities, ISimpleAudioVolume
+from plyer import notification
 import keyboard
-
 
 keybindings = {}
 
@@ -14,7 +14,7 @@ def toggle_mute(application_name):
             volume = session._ctl.QueryInterface(ISimpleAudioVolume)
             current_mute_status = volume.GetMute()
             volume.SetMute(not current_mute_status, None)
-            print(f"{'Muted' if not current_mute_status else 'Unmuted'} {application_name}")
+            notification.notify(title=f"PyMuteR", message=f"{'Muted' if not current_mute_status else 'Unmuted'} {application_name}", timeout=0.2)
             found = True
     if not found:
         print(f"Application '{application_name}' not found!")
@@ -29,7 +29,7 @@ def add_keybinding():
         return
 
     if key in keybindings:
-        messagebox.showwarning("Keybind confliction", f"keybind '{key}' is already assigned to another application plis change it")
+        messagebox.showwarning("Keybind confliction", f"keybind '{key}' is already assigned to another application plise change it")
         return
 
     keybindings[key] = app_name
@@ -57,6 +57,14 @@ def refresh_programs():
     if programs:
         program_var.set(programs[0])
 
+def remove_keybinding():
+    key = keybind_var.get()
+    if key in keybindings:
+        del keybindings[key]
+        keyboard.remove_hotkey(key)
+        keybinding_list.delete(keybinding_list.curselection())
+        keybind_var.set("")
+
 
 def get_audio_sessions():
     sessions = AudioUtilities.GetAllSessions()
@@ -82,6 +90,10 @@ program_dropdown.grid(row=0, column=1, sticky=tk.W)
 # refresh button
 refresh_button = ttk.Button(frame, text="Refresh", command=refresh_programs)
 refresh_button.grid(row=0, column=2, sticky=tk.E)
+
+#remov keyindd
+refresh_button = ttk.Button(frame, text="Remove Keybind", command=remove_keybinding)
+refresh_button.grid(row=2, column=2, sticky=tk.E)
 
 # keybind inputd
 keybind_var = tk.StringVar()
