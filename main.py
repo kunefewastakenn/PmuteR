@@ -39,9 +39,6 @@ def add_keybinding():
     keybinding_list.insert(tk.END, f"{key} -> {app_name}")
     keybind_var.set("")
 
-
-from collections import defaultdict
-
 def print_audio_sessions():
     sessions = AudioUtilities.GetAllSessions()
     seen_apps = set()
