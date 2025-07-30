@@ -1,4 +1,4 @@
-# PmuteR
+# PmuteR [NOT WORKING]
 Basic python executable for muting selected program and programs even while unfocused.
 
 
